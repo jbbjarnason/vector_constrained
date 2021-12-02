@@ -6,7 +6,7 @@ add_custom_target(std_modules ALL
     COMMAND
         ${CMAKE_COMMAND} -E echo "Building standard library modules"
     COMMAND
-        g++ -fmodules-ts -std=c++20 -c -x c++-system-header vector initializer_list utility algorithm stdexcept memory cstdio cstddef
+        g++ -fmodules-ts -std=c++20 -c -x c++-system-header vector initializer_list utility algorithm stdexcept memory cstdio cstddef cassert exception
     WORKING_DIRECTORY
         ${CMAKE_BINARY_DIR}
 )
