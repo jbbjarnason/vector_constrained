@@ -17,6 +17,12 @@ struct constrain_less_than_20 {
 };
 using lessthan20 = nonstd::vector_constrained<int, std::allocator<int>, constrain_less_than_20>;
 
+void print(const std::vector<int>& vec) {
+    for (const auto& item : vec) {
+        printf("Item is %d\n", item);
+    }
+}
+
 int main() {
     lessthan10 first_vector{{1, 2, 3, 4, 5, 6, 7, 8, 9}};
     lessthan20 second_vector{first_vector};// copy the first_vector
@@ -38,6 +44,8 @@ int main() {
 
     lessthan20 third_vector{normal_vector};// construct from std::vector
     assert(("still the same", third_vector == normal_vector));
+
+    print(third_vector);
 
     // ... you get the point
 

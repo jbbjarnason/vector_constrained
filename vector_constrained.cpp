@@ -33,15 +33,16 @@ public:
     constexpr vector_constrained(vector_constrained &&other, const Allocator &alloc) : _vec(other, alloc) {}
     constexpr vector_constrained(std::initializer_list<T> init, const Allocator &alloc = Allocator()) : _vec(alloc) {
         throw_if_invalid(init.begin(), init.end());
-        _vec = std::vector<T, Allocator>{ init, alloc };
+        _vec = std::vector<T, Allocator>{init, alloc};
     }
     // constructor NOT from std::vector
     template<class OtherPred>
-    constexpr explicit vector_constrained(const vector_constrained<T, Allocator, OtherPred> other) {
+    constexpr explicit vector_constrained(const vector_constrained<T, Allocator, OtherPred> &other) {
+        throw_if_invalid(other.begin(), other.end());
         _vec = other.vector();
     }
     // constructor NOT from std::vector
-    constexpr explicit vector_constrained(const std::vector<T, Allocator> other) {
+    constexpr explicit vector_constrained(const std::vector<T, Allocator> &other) {
         throw_if_invalid(other.begin(), other.end());
         _vec = other;
     }
@@ -66,6 +67,9 @@ public:
         throw_if_invalid(other.begin(), other.end());
         _vec = other;
         return *this;
+    }
+    constexpr operator const std::vector<T, Allocator>&() const {
+        return _vec;
     }
 
     constexpr void assign(size_t count, const T &value) {
